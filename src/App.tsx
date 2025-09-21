@@ -136,7 +136,7 @@ const MessagesSection = () => {
             <Heart className="w-6 h-6 sm:w-8 sm:h-8 mr-2 sm:mr-3" />
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-800 mb-3 sm:mb-4">
-            Messages from Your Children
+            Messages from Us Guys
           </h2>
           <p className="text-base sm:text-lg text-red-700 px-2">
             Heartfelt words from those who love you most
@@ -153,7 +153,7 @@ const MessagesSection = () => {
               <h3 className="text-lg sm:text-xl font-bold text-gray-800">Vincent</h3>
             </div>
             <blockquote className="text-gray-700 text-base sm:text-lg leading-relaxed">
-              "Dad, you've been my hero since day one. Your wisdom, patience, and unconditional love have shaped who I am today. Thank you for all the late-night talks, the encouraging words, and for always believing in me. Happy 51st birthday to the most amazing father! Here's to many more years of your dad jokes and amazing Ugali. Love you to the moon and back!"
+              "Dad, you've been my hero since day one. Your wisdom, patience, and unconditional love have shaped who I am today. Thank you for all the late-night talks, the encouraging words, and for always believing in me. Happy 55th birthday to the most amazing father! Here's to many more years of your dad jokes and amazing Ugali. Love you to the moon and back!"
             </blockquote>
             <div className="mt-4 sm:mt-6 flex justify-end">
               <span className="text-orange-600 font-medium text-sm sm:text-base">💕 With endless love</span>
