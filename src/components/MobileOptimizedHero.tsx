@@ -70,7 +70,7 @@ const MobileOptimizedHero: React.FC = () => {
 
         {/* Main Title - Responsive Typography */}
         <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-orange-800 mb-3 sm:mb-4 leading-tight">
-          Happy 51st Birthday,
+          Happy 55th Birthday,
           <span className="block text-red-600 mt-1 sm:mt-2">Dad!</span>
         </h1>
 

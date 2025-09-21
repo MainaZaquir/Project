@@ -148,9 +148,9 @@ const MessagesSection = () => {
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
             <div className="text-center mb-4 sm:mb-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-white font-bold text-lg sm:text-xl">V</span>
+                <span className="text-white font-bold text-lg sm:text-xl">V N</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-800">Vincent</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-800">Vincent Njuguna</h3>
             </div>
             <blockquote className="text-gray-700 text-base sm:text-lg leading-relaxed">
               "Dad, you've been my hero since day one. Your wisdom, patience, and unconditional love have shaped who I am today. Thank you for all the late-night talks, the encouraging words, and for always believing in me. Happy 55th birthday to the most amazing father! Here's to many more years of your dad jokes and amazing Ugali. Love you to the moon and back!"
@@ -164,9 +164,9 @@ const MessagesSection = () => {
           <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
             <div className="text-center mb-4 sm:mb-6">
               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
-                <span className="text-white font-bold text-lg sm:text-xl">Z</span>
+                <span className="text-white font-bold text-lg sm:text-xl">M Z</span>
               </div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-800">Zaquir</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-800">Maina Zaquir</h3>
             </div>
             <blockquote className="text-gray-700 text-base sm:text-lg leading-relaxed">
               "Happy 55th Birthday, Dad!You’ve shown me that true strength is gentle, that kindness is power, and that being genuine is the greatest legacy a man can leave behind. From cheering me on in the small moments to guiding me through the big ones, you’ve been a steady hand and an open heart. Your love has shaped the person I’m becoming. You’re not just my father you’re my teacher and my role model. May this year bring you the same joy, peace, and love you’ve always given us. Here’s to you, Dad today and always."
@@ -267,7 +267,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-gradient-to-r from-orange-800 to-red-800 text-white py-6 sm:py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-base sm:text-lg mb-2">Made with ❤️ by your loving family</p>
+          <p className="text-base sm:text-lg mb-2">Made with ❤️ by your loving sons</p>
           <p className="text-orange-200 text-sm sm:text-base">Happy 55th Birthday, Dad! 🎉</p>
         </div>
       </footer>
