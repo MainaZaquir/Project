@@ -1,156 +1,89 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
-interface ConfettiParticle {
+interface ConfettiPiece {
   id: number;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
+  rotation: number;
   color: string;
   size: number;
-  rotation: number;
+  velocityX: number;
+  velocityY: number;
   rotationSpeed: number;
-  gravity: number;
-  life: number;
-  maxLife: number;
 }
 
-interface ConfettiAnimationProps {
-  isActive: boolean;
-  particleCount?: number;
-  duration?: number;
-  colors?: string[];
-  onComplete?: () => void;
-}
+export default function ConfettiAnimation() {
+  const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
+  const [isActive, setIsActive] = useState(true);
 
-const ConfettiAnimation: React.FC<ConfettiAnimationProps> = ({
-  isActive,
-  particleCount = 50,
-  duration = 3000,
-  colors = ['#F97316', '#EAB308', '#EF4444', '#10B981', '#3B82F6', '#8B5CF6'],
-  onComplete
-}) => {
-  const [particles, setParticles] = useState<ConfettiParticle[]>([]);
-  const [animationId, setAnimationId] = useState<number | null>(null);
+  useEffect(() => {
+    if (!isActive) return;
 
-  // Create initial particles
-  const createParticles = useCallback(() => {
-    const newParticles: ConfettiParticle[] = [];
-    
-    for (let i = 0; i < particleCount; i++) {
-      newParticles.push({
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const isMobile = width < 640;
+    const count = isMobile ? 40 : 100;
+
+    const colors = ['#ec4899', '#8b5cf6', '#06b6d4', '#f59e0b', '#ef4444'];
+    const newConfetti: ConfettiPiece[] = [];
+
+    for (let i = 0; i < count; i++) {
+      newConfetti.push({
         id: i,
-        x: Math.random() * window.innerWidth,
+        x: Math.random() * width,
         y: -10,
-        vx: (Math.random() - 0.5) * 4, // Horizontal velocity
-        vy: Math.random() * 3 + 2, // Vertical velocity
-        color: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * 8 + 4,
         rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 10,
-        gravity: 0.1,
-        life: duration,
-        maxLife: duration
+        color: colors[Math.floor(Math.random() * colors.length)],
+        size: isMobile ? Math.random() * 4 + 3 : Math.random() * 6 + 4,
+        velocityX: (Math.random() - 0.5) * 2,
+        velocityY: Math.random() * 3 + 2,
+        rotationSpeed: (Math.random() - 0.5) * 6,
       });
     }
-    
-    return newParticles;
-  }, [particleCount, colors, duration]);
 
-  // Animation loop
-  const animate = useCallback(() => {
-    setParticles(prevParticles => {
-      const updatedParticles = prevParticles.map(particle => {
-        // Update physics
-        const newVy = particle.vy + particle.gravity;
-        const newX = particle.x + particle.vx;
-        const newY = particle.y + newVy;
-        const newRotation = particle.rotation + particle.rotationSpeed;
-        const newLife = particle.life - 16; // Assuming 60fps
+    setConfetti(newConfetti);
 
-        return {
-          ...particle,
-          x: newX,
-          y: newY,
-          vy: newVy,
-          rotation: newRotation,
-          life: newLife
-        };
-      }).filter(particle => 
-        particle.life > 0 && 
-        particle.y < window.innerHeight + 50 &&
-        particle.x > -50 && 
-        particle.x < window.innerWidth + 50
-      );
-
-      // Continue animation if particles exist
-      if (updatedParticles.length > 0) {
-        const id = requestAnimationFrame(animate);
-        setAnimationId(id);
-      } else {
-        setAnimationId(null);
-        onComplete?.();
-      }
-
-      return updatedParticles;
-    });
-  }, [onComplete]);
-
-  // Start animation when active
-  useEffect(() => {
-    if (isActive && particles.length === 0) {
-      const newParticles = createParticles();
-      setParticles(newParticles);
-      
-      // Start animation loop
-      const id = requestAnimationFrame(animate);
-      setAnimationId(id);
-    }
-
-    // Cleanup on unmount or when inactive
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-        setAnimationId(null);
-      }
+    const animateConfetti = () => {
+      setConfetti(prev => prev.map(piece => ({
+        ...piece,
+        x: piece.x + piece.velocityX,
+        y: piece.y + piece.velocityY,
+        rotation: piece.rotation + piece.rotationSpeed,
+        velocityY: piece.velocityY + 0.1, // gravity
+      })).filter(piece => piece.y < height + 50));
     };
-  }, [isActive, particles.length, createParticles, animate, animationId]);
 
-  // Stop animation when not active
-  useEffect(() => {
-    if (!isActive) {
-      setParticles([]);
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-        setAnimationId(null);
-      }
-    }
-  }, [isActive, animationId]);
+    const interval = setInterval(animateConfetti, 16);
+    const timeout = setTimeout(() => {
+      setIsActive(false);
+      clearInterval(interval);
+    }, isMobile ? 5000 : 8000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [isActive]);
+
+  if (!isActive && confetti.length === 0) return null;
 
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {particles.map(particle => {
-        const opacity = particle.life / particle.maxLife;
-        return (
-          <div
-            key={particle.id}
-            className="absolute"
-            style={{
-              left: `${particle.x}px`,
-              top: `${particle.y}px`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              backgroundColor: particle.color,
-              opacity: opacity,
-              transform: `rotate(${particle.rotation}deg)`,
-              borderRadius: Math.random() > 0.5 ? '50%' : '0%',
-              willChange: 'transform, opacity'
-            }}
-          />
-        );
-      })}
+      {confetti.map(piece => (
+        <div
+          key={piece.id}
+          className="absolute w-2 h-2 opacity-90"
+          style={{
+            left: `${piece.x}px`,
+            top: `${piece.y}px`,
+            backgroundColor: piece.color,
+            width: `${piece.size}px`,
+            height: `${piece.size}px`,
+            transform: `rotate(${piece.rotation}deg)`,
+            borderRadius: Math.random() > 0.5 ? '50%' : '0',
+          }}
+        />
+      ))}
     </div>
   );
-};
-
-export default ConfettiAnimation;
+}
